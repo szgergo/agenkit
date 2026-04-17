@@ -3,6 +3,7 @@ package manifest
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"go.yaml.in/yaml/v4"
@@ -269,18 +270,9 @@ func TestParseManifestWithInvalidMode(t *testing.T) {
 	}
 
 	// Check that the error mentions mode validation
-	if !contains(err.Error(), "mode") && !contains(err.Error(), "Invalid") {
+	if !strings.Contains(err.Error(), "mode") && !strings.Contains(err.Error(), "Invalid") {
 		t.Errorf("expected error about mode validation, got: %v", err)
 	}
-}
-
-func contains(s, substr string) bool {
-	for i := 0; i <= len(s)-len(substr); i++ {
-		if s[i:i+len(substr)] == substr {
-			return true
-		}
-	}
-	return false
 }
 
 func TestParseNoVars(t *testing.T) {
