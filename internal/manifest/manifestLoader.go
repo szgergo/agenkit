@@ -41,6 +41,9 @@ func gatherConfigFromPath(path string) (*Manifest, error) {
 	rawConfig, err := os.ReadFile(path)
 
 	if err != nil {
+		if os.IsNotExist(err) {
+			return nil, nil
+		}
 		return nil, fmt.Errorf("reading file %s: %w", path, err)
 	}
 
