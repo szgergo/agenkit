@@ -1,0 +1,8 @@
+version: 1
+
+vars:
+  work_dir: "{home}/work"
+
+providers:
+  cursor:
+    config_path: "{home}/.config/cursor/mcp.json"

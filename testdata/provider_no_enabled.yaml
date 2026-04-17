@@ -1,0 +1,5 @@
+version: 1
+
+providers:
+  cursor:
+    config_path: "{home}/.config/cursor/mcp.json"

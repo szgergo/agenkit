@@ -1,0 +1,51 @@
+version: 1
+
+# Path variables for cross-platform/cross-machine portability
+vars:
+  mcp_dir: "{home}/mcp-servers"
+  work_dir: "{home}/work"
+
+# MCP Server configurations
+mcp_servers:
+  filesystem:
+    command: node
+    args:
+      - "{vars.mcp_dir}/filesystem/dist/index.js"
+      - "{vars.work_dir}"
+    env:
+      NODE_ENV: production
+
+  github:
+    command: npx
+    args:
+      - "-y"
+      - "@modelcontextprotocol/server-github"
+    env:
+      GITHUB_TOKEN: "{env.GITHUB_TOKEN}"
+
+  postgres:
+    command: uvx
+    args:
+      - "mcp-server-postgres"
+      - "{env.DATABASE_URL}"
+    # Only generate for specific providers
+    providers: [claude, cursor]
+
+  context7:
+    command: npx
+    args: ["-y", "@upstash/context7-mcp"]
+    # Provider-specific arg overrides — same server, different flags per tool
+    provider_overrides:
+      cursor:
+        args: ["-y", "@upstash/context7-mcp", "--profile", "cursor-profile"]
+      claude:
+        args: ["-y", "@upstash/context7-mcp", "--profile", "claude-profile"]
+
+# Provider configuration paths (optional overrides)
+providers:
+  claude-desktop:
+    config_path: "/custom/path/to/claude_desktop_config.json"
+  cursor:
+    config_path: "{home}/.config/cursor/mcp.json"
+  codex:
+    enabled: false

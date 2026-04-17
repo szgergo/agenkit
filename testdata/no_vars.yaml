@@ -1,0 +1,10 @@
+version: 1
+
+mcp_servers:
+  github:
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-github"]
+
+providers:
+  cursor:
+    config_path: "{home}/.config/cursor/mcp.json"

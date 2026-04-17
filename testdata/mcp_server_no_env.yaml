@@ -1,0 +1,8 @@
+version: 1
+
+mcp_servers:
+  filesystem:
+    command: node
+    args:
+      - "/path/to/index.js"
+      - "/home/user/projects"
